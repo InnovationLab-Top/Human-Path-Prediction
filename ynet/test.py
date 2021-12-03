@@ -56,7 +56,6 @@ def evaluate(model, val_loader, val_images, num_goals, num_traj, obs_len, batch_
 	:param mode: ['val', 'test']
 	:return: val_ADE, val_FDE for one epoch
 	"""
-	im = skimage.io.imread('data/inD/test/scene1/reference.png')
 	model.eval()
 	val_ADE = []
 	val_FDE = []
@@ -214,8 +213,8 @@ def evaluate(model, val_loader, val_images, num_goals, num_traj, obs_len, batch_
 				val_FDE.append(((((gt_goal - waypoint_samples[:, :, -1:]) / resize) ** 2).sum(dim=3) ** 0.5).min(dim=0)[0])
 				val_ADE.append(((((gt_future - future_samples) / resize) ** 2).sum(dim=3) ** 0.5).mean(dim=2).min(dim=0)[0])
 				
-				plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=False)
-# 				plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=True, save_path='viz/'+str(scene)+'_'+str(counter)+'.png')
+# 				plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=False)
+				plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=True, save_path='viz/'+str(scene)+'_'+str(counter)+'.png')
 				counter+=1
 				
 				# plt.savefig()
