@@ -131,15 +131,19 @@ def image2world(image_coords, scene, homo_mat, resize):
 	return traj_image2world
 
 def plot_results(gt_future, future_samples, observed, scene_image, im, resize, with_bg=True, save_path=None):
-	plt.scatter(gt_future.cpu()[1,:,0]/resize, gt_future.cpu()[1,:,1]/resize, label='ground truth', zorder=3)
+	plt.figure(figsize=[20,20])
+	plt.scatter(gt_future.cpu()[1,:,0]/resize, gt_future.cpu()[1,:,1]/resize, label='ground truth', zorder=3, color='red')
 	plt.scatter(future_samples.cpu()[:,1,:,0]/resize, future_samples.cpu()[:,1,:,1]/resize, label='predictions', alpha=0.1, zorder=2)
 	plt.scatter(observed[5:10,0]/resize, observed[5:10,1]/resize, label='observed_past', color='cyan', zorder=1)
 	scene_image_rescaled = rescale(scene_image.cpu().squeeze()[1].squeeze(), 1/resize)
-	im_rescaled = rescale(im.cpu().squeeze()[1].squeeze(), 1/resize)
+	im_rescaled = rescale(im.cpu().squeeze()[1].squeeze(), 1/resize); 
 	plt.imshow(scene_image_rescaled, alpha=0.001)
 	if with_bg:
-		plt.imshow(scene_image_rescaled)
-		plt.imshow(im_rescaled, alpha=0.7)
+		plt.axis('off')
+		plt.imshow(scene_image_rescaled, cmap="gray")
+		plt.axis('off')
+		plt.imshow(im_rescaled, alpha=0.7, cmap="gray")
+    
 	plt.legend()							
 	
 	if save_path is not None:
