@@ -131,8 +131,8 @@ def image2world(image_coords, scene, homo_mat, resize):
 	return traj_image2world
 
 def plot_results(gt_future, future_samples, observed, scene_image, im, resize, with_bg=True, save_path=None):
-	plt.figure(figsize=[20,20])
-	plt.scatter(gt_future.cpu()[1,:,0]/resize, gt_future.cpu()[1,:,1]/resize, label='ground truth', zorder=3, color='red')
+	plt.figure(figsize=[15,9])
+	plt.scatter(gt_future.cpu()[1,:,0]/resize, gt_future.cpu()[1,:,1]/resize, label='ground truth', zorder=3, color='red', s=1)
 	plt.scatter(future_samples.cpu()[:,1,:,0]/resize, future_samples.cpu()[:,1,:,1]/resize, label='predictions', alpha=0.1, zorder=2)
 	plt.scatter(observed[5:10,0]/resize, observed[5:10,1]/resize, label='observed_past', color='cyan', zorder=1)
 	scene_image_rescaled = rescale(scene_image.cpu().squeeze()[1].squeeze(), 1/resize)
@@ -145,7 +145,7 @@ def plot_results(gt_future, future_samples, observed, scene_image, im, resize, w
 		plt.imshow(im_rescaled, alpha=0.7, cmap="gray")
     
 	plt.legend()							
-	
+	plt.tight_layout()
 	if save_path is not None:
 		plt.savefig(save_path)
 	plt.show()
