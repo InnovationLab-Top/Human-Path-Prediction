@@ -33,7 +33,6 @@ def torch_multivariate_gaussian_heatmap(coordinates, H, W, dist, sigma_factor, r
 
 def evaluate(model, val_loader, val_images, num_goals, num_traj, obs_len, batch_size, device, input_template, waypoints, resize, temperature, use_TTST=False, use_CWS=False, rel_thresh=0.002, CWS_params=None, dataset_name=None, homo_mat=None, mode='val'):
 	"""
-
 	:param model: torch model
 	:param val_loader: torch dataloader
 	:param val_images: dict with keys: scene_name value: preprocessed image as torch.Tensor
@@ -213,7 +212,7 @@ def evaluate(model, val_loader, val_images, num_goals, num_traj, obs_len, batch_
 				val_FDE.append(((((gt_goal - waypoint_samples[:, :, -1:]) / resize) ** 2).sum(dim=3) ** 0.5).min(dim=0)[0])
 				val_ADE.append(((((gt_future - future_samples) / resize) ** 2).sum(dim=3) ** 0.5).mean(dim=2).min(dim=0)[0])
 				
-# 				plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=False)
+				# plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=False)
 				plot_results(gt_future, future_samples, observed, scene_image, val_images[scene], resize, with_bg=True, save_path='viz/'+str(scene)+'_'+str(counter)+'.png')
 				counter+=1
 				
